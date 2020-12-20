@@ -50,5 +50,18 @@
     - _Runtime Stack_
     - _Machine Stack_
     
-      
-      
+## Hoisting
+- Hoisting is the mechanism in js through which we can access the variables and functions in the program even before initialising them or even before the lines of declaring those variables and functions without any error.
+- In js even before the js code starts executing, the memory is allocated to variables and functions.
+(As seen above in the memory allocation phase of the js)
+
+### Not-Defined vs Undefined
+- **Not defined** means the variable is not in the memory which means not declared anywhere.
+- **Undefined** means the variable is in the memory which means declared somewhere in the program but till now or till this point it is not initialised as while keeping in the memory in the **Memory allocation phase** js will keep the variable in the memory by specifying a special value called undefined.
+
+### Functions types and their behavior
+- In case of the **Normal Functions or Proper Functions**, they are defined somewhere in the program code with the _keyword function_, so the js will load the entire function code into the memory in the **Memory Execution Phase** it self. So even before the line it declared we can access or call the function directly.
+- In case of the **Arrow Functions or Anonymous Functions assigned to Variable**, they are defined somewhere in the program code like _variable which is assigned with function_. So js will load the _variable_ into the memory with specifying as undefined instead of the entire function code because here the arrow function is assigned to some variable.
+
+   
+   
