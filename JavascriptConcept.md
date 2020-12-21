@@ -63,5 +63,34 @@
 - In case of the **Normal Functions or Proper Functions**, they are defined somewhere in the program code with the _keyword function_, so the js will load the entire function code into the memory in the **Memory Execution Phase** it self. So even before the line it declared we can access or call the function directly.
 - In case of the **Arrow Functions or Anonymous Functions assigned to Variable**, they are defined somewhere in the program code like _variable which is assigned with function_. So js will load the _variable_ into the memory with specifying as undefined instead of the entire function code because here the arrow function is assigned to some variable.
 
-   
-   
+
+## Shortest JS Code is an Empty JS File
+- Even we doesnot write an single line of code in the js file, it will run.
+- When we execute that empty js file, the global execution context will be created along with the memory space by js engine even there is nothing to do externally in the file.
+
+### JS engine
+- Different browsers or environments use different engines to run the js.
+- Chrome uses v8 js engine to run the javascript.
+- These engines has a responsibility to create this global object, incase of browsers it is known as _window_, in case of node some other object, and wherever you run the code the js program it is different but there will be a global object created.
+
+- And also creates some objects and keywords. Like
+### window object
+- Which contains huge collection of methods and variables related to the window.
+- window object can be used from anywhere globally.
+- Its a global object which will be created along with global execution context when we run any program.
+
+#### this variable
+- Along with the window object while creation of global execution context, js engine creates a _this_ variable.
+- It will points to the window object initially while the creation of global execution context creation time itself.
+- At global level, this===window is true.
+
+#### When ever you create any variables in the global space (not in any functions) they are attached to that global object (_window_ in the browser). 
+#### Whenever we try to access any variables or function without any objects (which are declared globally) then the js engine assumes implicitly that it is in the global space.
+```
+var a=10;
+console.log(a);
+console.log(window.a);
+console.log(this.a);
+```
+- All the above 3 console statements results the same.
+
