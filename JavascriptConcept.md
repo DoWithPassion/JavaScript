@@ -95,3 +95,72 @@ console.log(this.a);
 ```
 - All the above 3 console statements results the same.
 
+## Scope Chain, Scope & Lexical Environment
+- As we discussed above, all the variables that declared in global space will have scope and can be access with in the inner functions also.
+```
+  function a(){
+    console.log(b) // prints 10
+    function c(){
+      console.log(b) // prints 10
+    }
+    c()
+  }
+  var b = 10
+  a()
+  
+```
+- Here we have declared the b in a() as c() is within the a() it can access the variable b. But we cannot access the variable b outside the function a which pulls the scope into action.
+```
+  function a(){
+    var b = 10
+    console.log(b) // prints 10
+    function c(){
+      console.log(b) // prints 10
+    }
+    c()
+  }
+  a()
+  console.log(b);
+```
+### Scope 
+  - It means where can we access the specific variable or specific function in our code.
+
+- So, lets look at the code.
+- When we run our code, Initially a global execution context is created and pushed into the call stack and all the variables and functions in the global scope are allocated with the memory.
+- Later while the function a is called, it will create another execution context, then memory is created for variable b and function c.
+- After that the execution of code in the function begins, b is assigned with the value 10 and call the function c.
+- As function invoked, execution context for C is created and again the memory is allocated along with code component.
+### Lexical Environment
+- Lexical (in hierarchy or in order) means where the specific code is physically present.
+   Eg: From the above example, we can say that c is lexically inside function a & function a is lexically inside the global space.
+- Wherever an execution context is created, a lexical environment is also created.
+- Lexical Enviroment is the local memory along with lexical environment of its lexical parent(where the current lexical env sits).
+   Eg: From the above example, lexical enviroment of the function c includes the local execution context memory and the parent lexical enviroment means the function a's execution context memory
+   - In the same way, lexical environment of function a  =  local execution context memory space + lexical enviroment of global execution context
+   - In case of global lexical environment, the parent lexical enviroment points to null.
+ Eg:
+ - When we try to print the variable b, first js engine searches within the local lexical environment and as it is not found it will searches in the parent lexical enviroment through some reference to that and so on until it is found or parent lexical enviroment is null.
+ ```
+  function a(){
+    console.log(b) // prints 10
+    function c(){
+      console.log(b) // prints 10
+    }
+    c()
+  }
+  var b = 10
+  a()
+  
+```
+- In this example, when we print the variable b, first it searches in the current global execution context lexical environment.
+- As it is not found,then it went to the reference of the parent lexical environment & try to search in that global lexical environment but it is null and no more lexical enviroments.
+- So as js engine not found b in the global and its parent it declares and raises that the variable b is _not defined_ (not in the scope).
+
+## Scope Chain
+- The way/mechanism of the finding variable or functions through this chain of lexical enviroments and their paarent references is known as Scope Chain.
+- It is nothing but the chain of all these lexical enviroment and their parent references.
+- Finally, js engine first try to find the variable in the local lexical enviroment and if it is not found it moves up to parent level of the scope chain.
+- **Chain of the lexical enviroments is known as Scope Chain.**
+- In browser *Scope* is lexical enviroment.
+
+
