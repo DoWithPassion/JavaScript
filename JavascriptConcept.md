@@ -71,8 +71,9 @@
 ### JS engine
 - Different browsers or environments use different engines to run the js.
 - Chrome uses v8 js engine to run the javascript.
-- These engines has a responsibility to create this global object, incase of browsers it is known as _window_, in case of node some other object, and wherever you run the code the js program it is different but there will be a global object created.
-
+- Firefox uses Spider Monkey js engine
+- Chakra Jscript engine is used in edge
+- These engines has a responsibility to create this global object, incase of browsers it is known as _window_, in case of node some other object(called global), and wherever you run the code the js program it is different but there will be a global object created.
 - And also creates some objects and keywords. Like
 ### window object
 - Which contains huge collection of methods and variables related to the window.
