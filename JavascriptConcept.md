@@ -82,7 +82,7 @@
 
 #### this variable
 - Along with the window object while creation of global execution context, js engine creates a _this_ variable.
-- It will points to the window object initially while the creation of global execution context creation time itself.
+- It will points to the window object while the global execution context creation time itself.
 - At global level, this===window is true.
 
 #### When ever you create any variables in the global space (not in any functions) they are attached to that global object (_window_ in the browser). 
