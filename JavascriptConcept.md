@@ -175,4 +175,30 @@ console.log(this.a);
 - **Chain of the lexical enviroments is known as Scope Chain.**
 - In browser *Scope* is lexical enviroment.
 
+## let & const vs var
+- Generally, all the variables are hoisted inspite of whether they are declared with let/const/var.
+- But in the memory allocation phase, memory will be allocated for let & const variables and also for var variables but the variables declared using var are attached to the Global object but the let/const are attached to some other memory space other than global.
+- As the let and const variables are put in some other location than global, they cannot be accessed without assigning some value.
+- These let/const variables will not be accessed with window object.
+### Duplicate Declaration
+- Re-declaration of let/const variables is not allowed and raises syntax error (specifying identifier has already been declared) even before the start of program execution.
+- But Re-declaration of var variables is permitted.
+
+### let vs const
+- Re-initialization/initialization after declaration is possible incase of the let but incase of the const, re-initialization is not possible and also the value for const variable should be given at the time of declaration itself.
+- If we not gave value to const variable at the time of declaration, it will throw syntax error saying that initializer for const variable is missing because the const syntax expects initialization & declaration at the same time.
+- If we not try to re-initialize or change the value of const variable after declaration time, it throws Type Error: Assignment to constant variable because const type variable can be reassigned.
+
+### Reference error
+- When the js engine tries to access the specific variable inside the memory space but it cannot access it then it raises reference error.
+
+**Whenever possible we need to use const then let or if needed we need to use var**
+
+
+## Temporal Dead Zone
+- The time between when the let/const variables are hoisted & till they are initialized with some value is called Temporal deadzone.
+- If we are trying to access that variables which are in temporal dead zone we get reference error specifying that **we cannot access variable before initialization**.
+- Which is different error from the error which is caused if we try to access the variable which is not even declared anywhere in the program. (If it is not declared anywhere it will raise the reference error specifying **variable is not defined**).
+- Moving all the declarations to the top of the code is best way to avoid temporal deadzone/shrink the temporal deadzone.
+
 
