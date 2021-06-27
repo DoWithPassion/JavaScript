@@ -152,12 +152,24 @@ console.log(this.a);
   a()
   
 ```
-- In this example, when we print the variable b, first it searches in the current global execution context lexical environment.
-- As it is not found,then it went to the reference of the parent lexical environment & try to search in that global lexical environment but it is null and no more lexical enviroments.
+- In this below example, when we print the variable b, first it searches in the current global execution context lexical environment.
+```
+  function a(){
+    var b = 10
+    console.log(b) // prints 10
+    function c(){
+      console.log(b) // prints 10
+    }
+    c()
+  }
+  a()
+  console.log(b);
+```
+- As it is not found,then it tries to search for the reference of the parent lexical environment of global lexical environment but it is null. Therefore no more lexical enviroments.
 - So as js engine not found b in the global and its parent it declares and raises that the variable b is _not defined_ (not in the scope).
 
 ## Scope Chain
-- The way/mechanism of the finding variable or functions through this chain of lexical enviroments and their paarent references is known as Scope Chain.
+- The way/mechanism of the finding variable or functions through this chain of lexical enviroments and their parent references is known as Scope Chain.
 - It is nothing but the chain of all these lexical enviroment and their parent references.
 - Finally, js engine first try to find the variable in the local lexical enviroment and if it is not found it moves up to parent level of the scope chain.
 - **Chain of the lexical enviroments is known as Scope Chain.**
