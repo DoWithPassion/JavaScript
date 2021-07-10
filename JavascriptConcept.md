@@ -201,4 +201,43 @@ console.log(this.a);
 - Which is different error from the error which is caused if we try to access the variable which is not even declared anywhere in the program. (If it is not declared anywhere it will raise the reference error specifying **variable is not defined**).
 - Moving all the declarations to the top of the code is best way to avoid temporal deadzone/shrink the temporal deadzone.
 
+## Block Scope & Shadowing
+
+### Block
+- Block is also known as compound statement.
+```
+{
+
+}
+```
+- Block is used to group the multiple statements.
+- This grouping of multiple statements is needed and can be used in a place where javascript expects a single statement.
+Eg: Suppose if we take a if condition, it expects only a single statement.
+i.e., we cannot write multiple statements directly under if condition. there comes the block to group the multiple statements as a single statement.
+```
+<!-- With Single statement -->
+if() ....;
+<!-- With Multiple Statements  -->
+if(){
+.........;
+.........;
+}
+```
+
+### Block Scope
+- It means what all variables and functions that can be accessed inside a block is called Block Scope.
+Eg:
+```
+{
+  var a = 10;
+  let b = 20;
+  const c = 30;
+}
+```
+- When we take above example code and run it, we can observe that the b & c variables are hoisted at seperate space called block scope.
+- But a will be a global scope as we discussed variables declared with var always tied to the scope where they are declared.
+- As here, it is not declared in any function and declared in the global execution context so it is hoisted to global space.
+- And we can also check that even let and const are declared in global execution context, but they are hoisted in special space called block scope. So let and const variables are called as block scoped variables.
+
+### Shadowing in js
 
