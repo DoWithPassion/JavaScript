@@ -240,4 +240,29 @@ Eg:
 - And we can also check that even let and const are declared in global execution context, but they are hoisted in special space called block scope. So let and const variables are called as block scoped variables.
 
 ### Shadowing in js
+- Suppose if we have same named variable outside the block and also inside the block then the variable inside the block will shadows the variable which is outside the block and also modifies the variable which is outside the block. 
+- Lets see an example for clear understanding
+- Program
+    ```
+      var a = 200
+      {
+        var a = 10;
+        let b = 20;
+        const c = 30;
+        console.log(a);
+        console.log(b);
+        console.log(c);
+      }
+      console.log(a);
+    ```
+ - Output
+    ```
+      10
+      20
+      30
+      10
+    ```
+   - Here the variable a is declared inside the block and also outside the block. When we assign the variable a with value 10, it shadows its value to the var a outside the block and also changes the value of var a. So that even we print the variable a after the block ends we get the value as 10 due to shadowing.
+   - This is happening because both are of type **"var"**, also with same name and also as we discussed above the **var** type variables are attached to the global scope even though they are in the bloc.
+
 
