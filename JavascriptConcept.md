@@ -245,11 +245,11 @@ const a = 20;
   const a = 100;
   {
     const a = 200;
-    console.log(a);
+    console.log(a); //200
   }
 }
 ```
-
+- Scopes for the normal functions and arrow functions is same.
 
 ### Shadowing in js
 - Suppose if we have the same-named variable outside the block and also inside the block then the variable inside the block will shadow the variable which is outside the block.
