@@ -5,14 +5,14 @@
   - It can be considered as a container in which whole javascript code is executed.
   - It has 2 components in it.
       1. Memory Component
-        - It is the place where the variables and functions are stored in the form of key value pairs.
+        - It is the place where the variables and functions are stored in the form of key-value pairs.
         - It can be also known as **Variable environment**.
       2. Code Component
-        - It is the place where our code is executed line by line as it is a single threaded.
+        - It is the place where our code is executed line by line as it is single-threaded.
         - It can be also known as **Thread of Execution**.
 ### JavaScript is a Synchronous Single-Threaded Language.
-  - As it is a single threaded language, js can execute only one command at a time.
-  - Synchronous single threaded means that js can execute one command at a time and in a specific order which means it will only goes to next line if it executed the current line.
+  - As it is a single-threaded language, js can execute only one command at a time.
+  - Synchronous single-threaded means that js can execute one command at a time and in a specific order which means it will only go to the next line if it executed the current line.
 
 
 ## What happens when we run js code?
@@ -31,15 +31,15 @@
       - The functions will not be executed directly until they have been called or invoked.
       - When the *function is called*, a *new execution context is created* which again consists of memory and code components. And it also contains the memory creation phase and the code execution phase.
       - When the return statement is encountered in the function, it takes the value of the variable in the return statement from the local memory of the function execution context and it returns the control back to the place in the main execution context(parent) where the function the is called.
-      - And the **whole execution context of the function is deleted after the control coming to main execution context**. It means when we call the same function another time the again the new execution context is created and the same process is repeated.
+      - And the **whole execution context of the function is deleted after the control coming to the main execution context**. It means when we call the same function another time again the new execution context is created and the same process is repeated.
      
 
 ### Call stack
-  - It is a stack which is populated when a program is executed.
+  - It is a stack that is populated when a program is executed.
   - By using this, javascript is working and managing with all the execution contexts it created.
   - Every time in the bottom of the stack, the global execution context is populated.
   - When a function is invoked a new execution context is put into the stack and control is now to the top of the stack i.e., the function's execution context.
-  - After the function returns the value to global execution context, that function is popped from the call stack and the control goes back to the global execution context (as it is the top element in the stack now).
+  - After the function returns the value to the global execution context, that function is popped from the call stack and the control goes back to the global execution context (as it is the top element in the stack now).
   - After the complete execution of the js program the global execution context is also popped out from the call stack.
 
   - Therefore, we can see that the **Call Stack** is the one that **Maintains the order of execution of the Execution Contexts**.
@@ -59,33 +59,33 @@
 - **Not defined** means the variable is not in the memory which means not declared anywhere.
 - **Undefined** means the variable is in the memory which means declared somewhere in the program but till now or till this point it is not initialised as while keeping in the memory in the **Memory allocation phase** js will keep the variable in the memory by specifying a special value called undefined.
 
-### Functions types and their behavior
-- In case of the **Normal Functions or Proper Functions**, they are defined somewhere in the program code with the _keyword function_, so the js will load the entire function code into the memory in the **Memory Execution Phase** it self. So even before the line it declared we can access or call the function directly.
-- In case of the **Arrow Functions or Anonymous Functions assigned to Variable**, they are defined somewhere in the program code like _variable which is assigned with function_. So js will load the _variable_ into the memory with specifying as undefined instead of the entire function code because here the arrow function is assigned to some variable.
+### Functions types and their behaviour
+- In the case of the **Normal Functions or Proper Functions**, they are defined somewhere in the program code with the _keyword function_, so the js will load the entire function code into the memory in the **Memory Execution Phase** itself. So even before the line, it declared we can access or call the function directly.
+- In the case of the **Arrow Functions or Anonymous Functions assigned to Variable**, they are defined somewhere in the program code like _variable which is assigned with function_. So js will load the _variable_ into the memory with specifying as undefined instead of the entire function code because here the arrow function is assigned to some variable.
 
 
 ## Shortest JS Code is an Empty JS File
-- Even we doesnot write an single line of code in the js file, it will run.
-- When we execute that empty js file, the global execution context will be created along with the memory space by js engine even there is nothing to do externally in the file.
+- Even we don't write a single line of code in the js file, it will run.
+- When we execute that empty js file, the global execution context will be created along with the memory space by the js engine even there is nothing to do externally in the file.
 
 ### JS engine
 - Different browsers or environments use different engines to run the js.
-- Chrome uses v8 js engine to run the javascript.
+- Chrome uses the v8 js engine to run the javascript.
 - Firefox uses Spider Monkey js engine
 - Chakra Jscript engine is used in edge
-- These engines has a responsibility to create this global object, incase of browsers it is known as _window_, in case of node some other object(called global), and wherever you run the code the js program it is different but there will be a global object created.
+- These engines have a responsibility to create this global object, incase of browsers it is known as _window_, in case of node some other object(called global), and wherever you run the code the js program it is different but there will be a global object created.
 - And also creates some objects and keywords. Like
 ### window object
-- Which contains huge collection of methods and variables related to the window.
-- window object can be used from anywhere globally.
+- Which contains a huge collection of methods and variables related to the window.
+- window objects can be used from anywhere globally.
 - Its a global object which will be created along with global execution context when we run any program.
 
 #### this variable
-- Along with the window object while creation of global execution context, js engine creates a _this_ variable.
+- Along with the window object while creation of global execution context, the js engine creates a _this_ variable.
 - It will points to the window object while the global execution context creation time itself.
 - At global level, this===window is true.
 
-#### When ever you create any variables in the global space (not in any functions) they are attached to that global object (_window_ in the browser). 
+#### Whenever you create any variables in the global space (not in any functions) they are attached to that global object (_window_ in the browser). 
 #### Whenever we try to access any variables or function without any objects (which are declared globally) then the js engine assumes implicitly that it is in the global space.
 ```
 var a=10;
@@ -93,10 +93,10 @@ console.log(a);
 console.log(window.a);
 console.log(this.a);
 ```
-- All the above 3 console statements results the same.
+- All the above 3 console statements result in the same.
 
 ## Scope Chain, Scope & Lexical Environment
-- As we discussed above, all the variables that declared in global space will have scope and can be access with in the inner functions also.
+- As we discussed above, all the variables declared in global space will have the scope and can be accessed within the inner functions also.
 ```
   function a(){
     console.log(b) // prints 10
@@ -125,21 +125,21 @@ console.log(this.a);
 ### Scope 
   - It means where can we access the specific variable or specific function in our code.
 
-- So, lets look at the code.
+- So, let's look at the code.
 - When we run our code, Initially a global execution context is created and pushed into the call stack and all the variables and functions in the global scope are allocated with the memory.
 - Later while the function a is called, it will create another execution context, then memory is created for variable b and function c.
-- After that the execution of code in the function begins, b is assigned with the value 10 and call the function c.
-- As function invoked, execution context for C is created and again the memory is allocated along with code component.
+- After that the execution of code in the function begins, b is assigned with the value 10 and call function c.
+- As function invoked, execution context for C is created and again the memory is allocated along with the code component.
 ### Lexical Environment
-- Lexical (in hierarchy or in order) means where the specific code is physically present.
+- Lexical (in a hierarchy or order) means where the specific code is physically present.
    Eg: From the above example, we can say that c is lexically inside function a & function a is lexically inside the global space.
 - Wherever an execution context is created, a lexical environment is also created.
-- Lexical Enviroment is the local memory along with lexical environment of its lexical parent(where the current lexical env sits).
-   Eg: From the above example, lexical enviroment of the function c includes the local execution context memory and the parent lexical enviroment means the function a's execution context memory
-   - In the same way, lexical environment of function a  =  local execution context memory space + lexical enviroment of global execution context
-   - In case of global lexical environment, the parent lexical enviroment points to null.
+- Lexical Environment is the local memory along with the lexical environment of its lexical parent(where the current lexical env sits).
+   Eg: From the above example, the lexical environment of the function c includes the local execution context memory and the parent lexical environment means the function a's execution context memory
+   - In the same way, a lexical environment of function a  =  local execution context memory space + lexical environment of global execution context
+   - In the case of the global lexical environment, the parent lexical environment points to null.
  Eg:
- - When we try to print the variable b, first js engine searches within the local lexical environment and as it is not found it will searches in the parent lexical enviroment through some reference to that and so on until it is found or parent lexical enviroment is null.
+ - When we try to print the variable b, first js engine searches within the local lexical environment and as it is not found it will searches in the parent lexical environment through some reference to that and so on until it is found or the parent lexical environment is null.
  ```
   function a(){
     console.log(b) // prints 10
@@ -152,7 +152,7 @@ console.log(this.a);
   a()
   
 ```
-- In this below example, when we print the variable b in the global space outside the funtion a, then first it searches in the current global execution context lexical environment.
+- In this below example, when we print the variable b in the global space outside the function a, then first it searches in the current global execution context lexical environment.
 ```
   function a(){
     var b = 10
@@ -165,46 +165,46 @@ console.log(this.a);
   a()
   console.log(b);
 ```
-- As it is not found, then it tries to search for the reference of the parent lexical environment of global lexical environment but it is null. Therefore no more lexical enviroments.
-- So as js engine not found b in the global and its parent, it declares and raises that the variable b is _not defined_ (not in the scope).
+- As it is not found, then it tries to search for the reference of the parent lexical environment of the global lexical environment but it is null. Therefore no more lexical environments.
+- So as the js engine did not found b in the global and its parent, it declares and raises that the variable b is _not defined_ (not in the scope).
 
 ## Scope Chain
-- The way/mechanism of the finding variable or functions through this chain of lexical enviroments and their parent references is known as Scope Chain.
-- It is nothing but the chain of all these lexical enviroment and their parent references.
-- Finally, js engine first try to find the variable in the local lexical enviroment and if it is not found it moves up to parent level of the scope chain.
-- **Chain of the lexical enviroments is known as Scope Chain.**
-- In browser *Scope* is lexical enviroment.
+- The way/mechanism of the finding variable or functions through this chain of lexical environments and their parent references is known as Scope Chain.
+- It is nothing but the chain of all these lexical environments and their parent references.
+- Finally, the js engine first try to find the variable in the local lexical environment and if it is not found it moves up to the parent level of the scope chain.
+- **Chain of the lexical environments is known as Scope Chain.**
+- In browser *Scope* is the lexical environment.
 
 ## let & const vs var
-- Generally, all the variables are hoisted inspite of whether they are declared with let/const/var.
-- But in the memory allocation phase, memory will be allocated for let & const variables and also for var variables but the variables declared using var are attached to the Global object but the let/const are attached to some other memory space other than global.
+- Generally, all the variables are hoisted despite whether they are declared with let/const/var.
+- But in the memory allocation phase, memory will be allocated for let & const variables and also for var variables but the variables declared using var are attached to the Global object but the let/const is attached to some other memory space other than global.
 - As the let and const variables are put in some other location than global, they cannot be accessed without assigning some value.
-- These let/const variables will not be accessed with window object.
+- These let/const variables will not be accessed with the window object.
 ### Duplicate Declaration
 - Re-declaration of let/const variables is not allowed and raises syntax error (specifying identifier has already been declared) even before the start of program execution.
 - But Re-declaration of var variables is permitted.
 
 ### let vs const
-- Re-initialization/initialization after declaration is possible incase of the let but incase of the const, re-initialization is not possible and also the value for const variable should be given at the time of declaration itself.
-- If we not gave value to const variable at the time of declaration, it will throw syntax error saying that initializer for const variable is missing because the const syntax expects initialization & declaration at the same time.
-- If we not try to re-initialize or change the value of const variable after declaration time, it throws Type Error: Assignment to constant variable because const type variable can be reassigned.
+- Re-initialization/initialization after the declaration is possible in to incase of the let but incase of the const, re-initialization is not possible and also the value for the const variable should be given at the time of declaration itself.
+- If we did not give value to const variable at the time of declaration, it will throw a syntax error saying that the initializer for the const variable is missing because the const syntax expects initialization & declaration at the same time.
+- If we do not try to re-initialize or change the value of the const variable after declaration time, it throws Type Error: Assignment to a constant variable because const type variable can be reassigned.
 
 ### Reference error
-- When the js engine tries to access the specific variable inside the memory space but it cannot access it then it raises reference error.
+- When the js engine tries to access the specific variable inside the memory space but it cannot access it then it raises a reference error.
 
 **Whenever possible we need to use const then let or if needed we need to use var**
 
 
 ## Temporal Dead Zone
-- The time between when the let/const variables are hoisted & till they are initialized with some value is called Temporal deadzone.
-- If we are trying to access that variables which are in temporal dead zone we get reference error specifying that **we cannot access variable before initialization**.
-- Which is different error from the error which is caused if we try to access the variable which is not even declared anywhere in the program. (If it is not declared anywhere it will raise the reference error specifying **variable is not defined**).
-- Moving all the declarations to the top of the code is best way to avoid temporal deadzone/shrink the temporal deadzone.
+- The time between when the let/const variables are hoisted & till they are initialized with some value is called the Temporal dead zone.
+- If we are trying to access those variables which are in the temporal dead zone we get a reference error specifying that **we cannot access variable before initialization**.
+- This is a different error from the error which is caused if we try to access the variable which is not even declared anywhere in the program. (If it is not declared anywhere it will raise the reference error specifying **variable is not defined**).
+- Moving all the declarations to the top of the code is the best way to avoid the temporal dead zone/shrink the temporal dead zone.
 
 ## Block Scope & Shadowing
 
 ### Block
-- Block is also known as compound statement.
+- Block is also known as a compound statement.
 ```
 {
 
@@ -212,7 +212,7 @@ console.log(this.a);
 ```
 - Block is used to group the multiple statements.
 - This grouping of multiple statements is needed and can be used in a place where javascript expects a single statement.
-Eg: Suppose if we take a if condition, it expects only a single statement.
+Eg: Suppose if we take an if condition, it expects only a single statement.
 i.e., we cannot write multiple statements directly under if condition. there comes the block to group the multiple statements as a single statement.
 ```
 <!-- With Single statement -->
@@ -225,7 +225,7 @@ if(){
 ```
 
 ### Block Scope
-- It means what all variables and functions that can be accessed inside a block is called Block Scope.
+- It means what all variables and functions that can be accessed inside a block are called Block Scope.
 Eg:
 ```
 {
@@ -234,14 +234,43 @@ Eg:
   const c = 30;
 }
 ```
-- When we take above example code and run it, we can observe that the b & c variables are hoisted at seperate space called block scope.
+- When we take the above example code and run it, we can observe that the b & c variables are hoisted at separate space called block scope.
 - But a will be a global scope as we discussed variables declared with var always tied to the scope where they are declared.
 - As here, it is not declared in any function and declared in the global execution context so it is hoisted to global space.
-- And we can also check that even let and const are declared in global execution context, but they are hoisted in special space called block scope. So let and const variables are called as block scoped variables.
+- And we can also check that even let and const are declared in the global execution context, but they are hoisted in a special space called block scope. So let and const variables are called block-scoped variables.
+- Block scope also follows the lexical order, which means if we have nested blocks with same variable declared in each block and when we print the variable in some block, it will access the value of the variable from the nearest block. (i.e., checks in the current lexical environment and if it is not there then it will search in the parent lexical environment.)
+```
+const a = 20;
+{
+  const a = 100;
+  {
+    const a = 200;
+    console.log(a);
+  }
+}
+```
+
 
 ### Shadowing in js
-- Suppose if we have same named variable outside the block and also inside the block then the variable inside the block will shadows the variable which is outside the block and also modifies the variable which is outside the block. 
-- Lets see an example for clear understanding
+- Suppose if we have the same-named variable outside the block and also inside the block then the variable inside the block will shadow the variable which is outside the block.
+- In the case of let and const, when the same variable with the same type of global scope is declared in the block, the value in the block will shadow the global variable until the end of the block scope. That means after the end of the block scope if try to print the value, it prints the value before shadowing i.e., the value in the global scope.
+- Program
+    ```
+      let b = 200
+      {
+        var a = 10;
+        let b = 20;
+        const c = 30;
+        console.log(a);//10
+        console.log(b);//20
+        console.log(c);//30
+      }
+      
+      console.log(b);//200
+    ```
+    
+- But in the case of var, along with shadowing the value, it will also modify the variable which is outside the block. 
+- Let's see an example for a clear understanding
 - Program
     ```
       var a = 200
@@ -262,7 +291,17 @@ Eg:
       30
       10
     ```
-   - Here the variable a is declared inside the block and also outside the block. When we assign the variable a with value 10, it shadows its value to the var a outside the block and also changes the value of var a. So that even we print the variable a after the block ends we get the value as 10 due to shadowing.
-   - This is happening because both are of type **"var"**, also with same name and also as we discussed above the **var** type variables are attached to the global scope even though they are in the bloc.
+   - Here the variable a is declared inside the block and also outside the block. When we assign the variable a with value 10, it shadows its value to the var which is outside the block or in the global scope and also changes the value of var a. So that even we print the variable after the block ends we get the value as 10 due to shadowing.
+   - This is happening because both are of type **" var"**, also with the same name and also as we discussed above the **var** type variables are attached to the global scope even though they are in the block. 
+   - So, when the value of a is initially declared and assigned with 100, it will be allocated some memory space and attached to the global scope. And after when we are trying to create the same variable again in the block, it will also be attached to the global scope and due to the same name, the value will be shadowed and also replaced with the value 10.
+ 
+- It is not only a concept of the block but also for the function and behaves in the similar way.
 
+#### Illegal Shadowing
+- If we are trying to redeclare a variable _in a block as let/const type variable_, which is already declared as _let/const type variable in the global scope_ then it accepts and works fine.
+- But what if we are trying to redeclare a variable in a _block as var type variable_, which is already declared as _let/const type variable in the global scope_, then it raises an error that the particular variable is already been declared. 
+- Because the boundary of the var is either function scope if it is declared in a function or global scope if it is anywhere other than the functions(may be in blocks). So, as the var type variables scope is entire the program, when we try to redeclare the let type variable as var type variable in a block scope, var type variable is trying to redeclare at the global scope which raising conflict with the existing let variable as let variables cant be redeclared.
+- So, redeclaring of the let type variables as var type variables in the block (but not in the functions) cause the Illegal shadowing which cant be done.
+- But reverse is possible. i.e., redeclaring the var type variable as let type variable in a block is possible as the let type variable is specific to that particular block, it will not cause any issue.
 
+ 
