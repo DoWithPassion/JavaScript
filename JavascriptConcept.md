@@ -304,4 +304,47 @@ const a = 20;
 - So, redeclaring of the let type variables as var type variables in the block (but not in the functions) cause the Illegal shadowing which cant be done.
 - But reverse is possible. i.e., redeclaring the var type variable as let type variable in a block is possible as the let type variable is specific to that particular block, it will not cause any issue.
 
- 
+## Closures
+- Closure is a function together bundled with its lexical environment.
+- In simple terms,the function along with its lexical scope bundles together forms a closure.
+- Lets get some clear understanding from the example.
+```
+function x(){
+  var a = 7;
+  function y(){
+    console.log(a);
+  }
+  y()
+}
+x()
+```
+- When you executed this code, according to our previous knowledge of the lexical environments, we can predict that value 7 will be printed for the console log in function y. Here we understood that as the function is in y, while printing the variable a it will search in the current function lexical environment and if it is not found then it will check at the parent lexical environment(in the below global execution context) and prints the variable.
+- And if you seriously observe in the browser, you can see a new scope is present other that global and local scope which is closure and in that we can see the variable a. This is created when the function y execution context is pushed into the call stack.
+- This closure is nothing but the function and its corresponding lexical scope bundle (which means all the variables/functions used in that corresponding function).
+- It means the value that is printed in the console is from closure as it is from the parent function lexical environment.
+- This is so useful and lovely feature in javascript functions especially when returning the functions. i.e., when you return a function, the closure will be returned to the caller instead of the single function which makes us to access all the variables in the lexical scope of the function defination.
+- Lets see an example.
+```
+function x(){
+  var a = 7;
+  function y(){
+    console.log(a);
+  }
+  retrun y()
+}
+var z = x()
+console.log(z)
+```
+- Here we are returning y then its assigned to z. Then how the value of a will be accessed according to our lexical environment concept? Its not accessible right? But its accessible when we call z because the z is a closure now, which contains the function bundled with its lexical scope(event its further parents variables also). That the beauty of js.
+- This closures are more and more powerful concept of the js because these functions remembers things even when they are not in that lexical scope.
+### Uses of closures
+  -  Module Design pattern
+  -  Currying
+  -  Functions like "once"
+  -  memoize
+  -  maintaining state in async world
+  -  setTimeouts
+  -  Iterators
+  -  and many more
+- Closures are almost everywhere in the js.
+- 
