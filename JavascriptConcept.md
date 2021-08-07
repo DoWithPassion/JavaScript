@@ -318,11 +318,12 @@ function x(){
 }
 x()
 ```
-- When you executed this code, according to our previous knowledge of the lexical environments, we can predict that value 7 will be printed for the console log in function y. Here we understood that as the function is in y, while printing the variable a it will search in the current function lexical environment and if it is not found then it will check at the parent lexical environment(in the below global execution context) and prints the variable.
-- And if you seriously observe in the browser, you can see a new scope is present other that global and local scope which is closure and in that we can see the variable a. This is created when the function y execution context is pushed into the call stack.
+- When you executed this code, according to our previous knowledge of the lexical environments, we can predict that value 7 will be printed for the console log in function y. Here we understood that as the function is in y, while printing the variable a, it will search in the current function lexical environment and if it is not found then it will check at the parent lexical environment(in its global execution context) and prints the variable.
+- And if you seriously observe in the browser, you can see that a new scope is present other than that of the global and local scope, which is a closure and in that we can see the variable a. This is created when the function y execution context is pushed into the call stack.
 - This closure is nothing but the function and its corresponding lexical scope bundle (which means all the variables/functions used in that corresponding function).
 - It means the value that is printed in the console is from closure as it is from the parent function lexical environment.
-- This is so useful and lovely feature in javascript functions especially when returning the functions. i.e., when you return a function, the closure will be returned to the caller instead of the single function which makes us to access all the variables in the lexical scope of the function defination.
+- This is so useful and lovely feature in javascript functions especially when returning the functions. i.e., when you return a function, the closure will be returned to the caller instead of the single function. 
+- This makes us to access all the variables in the lexical scope of the function defination even they are not declared/initialized in the function.
 - Lets see an example.
 ```
 function x(){
@@ -330,10 +331,10 @@ function x(){
   function y(){
     console.log(a);
   }
-  retrun y()
+  return y
 }
 var z = x()
-console.log(z)
+z()
 ```
 - Here we are returning y then its assigned to z. Then how the value of a will be accessed according to our lexical environment concept? Its not accessible right? But its accessible when we call z because the z is a closure now, which contains the function bundled with its lexical scope(event its further parents variables also). That the beauty of js.
 - This closures are more and more powerful concept of the js because these functions remembers things even when they are not in that lexical scope.
@@ -347,4 +348,121 @@ console.log(z)
   -  Iterators
   -  and many more
 - Closures are almost everywhere in the js.
-- 
+
+## setTimeOut & Closures Interview Questions
+->
+  ```
+  function x(){
+    var i = 1;
+    setTimeout(function(){
+      console.log(i);
+    },3000)
+    console.log("Namaste JS");
+  }
+  x()
+  ```
+Output:
+```
+Namaste JS
+1 (After waiting for 3 seconds)
+```
+- What happened is that, JS forms a closure of the function in the setTimeout and the setTimeout function will takes this callback function, attaches a timer to it and stores it somewhere.
+- And continues to execute the remaining lines of the code without awaiting for the setTimeout.
+- And later when that timer expires, js takes that function and again put it to the call stack & then runs it.
+
+->
+```
+function x(){
+  for(var i=1; i<=5;i++){
+    setTimeout(function(){
+      console.log(i);
+    },i*1000);
+  }
+  console.log("Namaste JS");
+}
+x();
+```
+- Output
+```
+Namaste JS
+6
+6
+6
+6
+6
+```
+- Its printing like this because, it is due to the closures.
+- As the closure is a function along with its lexical environments, So even when the function is taken from its original scope, still it remembers its lexical environment.
+- What happened here is that, when the js takes and stores this function somewhere by attaching a timer, it remembers the **reference** to the variable i not its value.
+- So when the loop runs for the each time, it store/makes a new copy of the function (closure) which is in the setTimeout & attaches a timer along with remembering the reference that points to the i.
+- Here, in this case all the functions that are created and stored are pointing to the **same reference of i because the var scope is global**.
+- After storing, the js will completes the execution of loop quickly and doesnot wait for anything. So when the timer finishes, it will print/use the values of the remembered references at that particular point of time.
+- Here its too late to print the value on the each iteration as their timer is too long, the js continues with remaining program. So, in this case after the completion of the timer all the functions prints the same.
+
+
+- Here to fix it we can simply replace the variable i of type var with the variable i of type let.
+```
+function x(){
+  for(let i=1; i<=5;i++){
+    setTimeout(function(){
+      console.log(i);
+    },i*1000);
+  }
+  console.log("Namaste JS");
+}
+x();
+```
+Output:
+```
+Namaste JS
+1
+2
+3
+4
+5
+```
+- This is because all the background process is done as same as above, which stores the functions in the each loop and that function remembers its reference to that variable in the loop but as here we used the variable type as let which is a block scoped variable, js will create a new copy of i each and every time in the loop, so while storing the function in each iteration, the callback function will point out to a new reference of i(different memory location), which means different reference of i with every function.
+
+- So as we got some understanding, it all due to the maintance of single copy in each and every function right? so we seperated the copies with the let variables in a way that each function will point to a new copy of i as let is a block scoped.
+- So, we can also do with var by maintaining a new of copy of the i in each iteration which will be pointed by the function in setTimeouts.
+- So for that, what we can do is by using the concept of closures.
+```
+function x(){
+  for(let i=1; i<=5;i++){
+    function close(j){
+        setTimeout(function(){
+          console.log(j);
+        },j*1000);
+     }
+     close(i);
+  }
+  console.log("Namaste JS");
+}
+x();
+```
+- Here, we wrapped the setTimeout function inside a new function and calling that function close by passing the value of i.
+- Above approach will works because, every time when we called that close function with the i, it creates a new copy of i for itself.
+- So, by using this close function, we kind of created a new copy of x with the current value of the i in that iteration.
+
+- Or the below code also works fine.
+```
+function x(){
+  for(let i=1; i<=5;i++){
+    let j = i
+    setTimeout(function(){
+      console.log(j);
+    },j*1000);
+  }
+  console.log("Namaste JS");
+}
+x();
+```
+Output:
+```
+Namaste JS
+1
+2
+3
+4
+5
+```
