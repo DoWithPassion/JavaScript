@@ -466,3 +466,115 @@ Namaste JS
 4
 5
 ```
+- ```
+  function outest(){
+    var c=20;
+    function outer(b){
+      function inner(){
+        console.log(a,b,c);
+      }
+      let a = 10
+      return inner
+    }
+    return outer
+  }
+  let a = 100
+  var close = (outest())("helloworld")
+  close(); // 10 "helloword" 20
+```
+- *Closure in the sense the function binded with its lexical environment which includes all the below lexical environments in the callstack.*
+- Closures can be used to have dataprivacy or data hiding which means hiding or making the data invisible to other functions which are accessing it by encapsulating the data along with the functions.
+- Eg: When we wanted to implement the counter and make no one accessible to the counter variable directly without that function. Then by using closures, we can acheive it.
+```
+function counter(){
+  var count = 0;
+  function incrementCounter(){
+    count++;
+    console.log(count);
+  }
+  return incrementCounter;
+}
+
+// If we want to access the count outside, without using that function then it raises as count not defined
+console.log(count); //error as not defined
+
+// Instead we need to call the counter
+var counter1 = counter();
+counter1(); // 1
+counter1(); // 2
+
+// We can create as many ass instances as we want. i.e., a new closure is called and starts from the initial state.
+var counter2 = counter();
+counter2();
+counter2();
+counter2();
+```
+
+## Function Constructor in js
+- Its a normal function but by using the *this* object to initialize or declare the functions and variables makes it as scalable and use like a class.
+```
+function Counter(){
+  var count = 0;
+  this.incrementCounter = function(){
+    count++;
+    console.log(count);
+  }
+  this.decrementCounter = function(){
+    count--;
+    console.log(count);
+  }
+  
+}
+<!-- Initializing the constructor -->
+<!-- As it is a constructor function we need to initialize object using a new keyword -->
+var counter1 = new Counter();
+counter1.incrementCounter(); // 1
+counter1.incrementCounter(); // 2
+counter1.decrementCounter(); // 3
+```
+- This constructor function also follows the concept of closures.
+
+## Disadvantages of Closures
+- There is a chance of Overconsumption of the memory due to closures. Because, when everytime a closure is formed, it consumes a lot of memory and those closed over variables (which are used by closures) are not garbage collected.
+- It means if we use a lot of closures it may leads to accumalate of the memory which leads to memory leaks and slows down the browser.
+
+## Garbage Collector in Javascript
+-  Its like a program in the js engines of the browser, which frees up the unwanted or unused memory when the js engine finds that they are not used anymore/ no longer needed.
+Eg:
+- ```
+function a(){
+  var x = 0;
+  return function b(){
+    console.log(a);
+  }
+}
+a();
+```
+  - Here when we called a, the variables and functions in that a are created and after the execution of the function a, they are garbage collected in this case.
+- But if we use some closures in this function a,
+- ```
+function a(){
+  var x = 0;
+  return function b(){
+    console.log(x);
+  }
+}
+var y = a();
+```
+- Here x is refered in the inner function which closed over x and forms a closure and it is returned outside the function, then in this case the js engine cant directly clean/freeup the space of variable x because it is referenced in the other function until unless it confirms that all the usages of it are completed.
+- But in some modern browsers like chrome v8 engines, they finds out the unreacheable variables and smartly collects the garbage variables.
+- Smartly collects in the sense, when there is some code like this
+```
+function a(){
+  var x = 0, z=10;
+  return function b(){
+    console.log(x);
+  }
+}
+var y = a();
+```
+```
+y();
+```
+- When we called the function y() (the closure b which contains the referenc to both x and z but only x is used in the function b), and its execution is completed x will be still accessible because y is still present in the scope. But when comes to z which is not used the function y it will be smartly garbage collected by modern browser js engines.
+
