@@ -552,7 +552,8 @@ a();
 ```
   - Here when we called a, the variables and functions in that a are created and after the execution of the function a, they are garbage collected in this case.
 - But if we use some closures in this function a,
-- ```
+- 
+```
 function a(){
   var x = 0;
   return function b(){
@@ -577,4 +578,71 @@ var y = a();
 y();
 ```
 - When we called the function y() (the closure b which contains the referenc to both x and z but only x is used in the function b), and its execution is completed x will be still accessible because y is still present in the scope. But when comes to z which is not used the function y it will be smartly garbage collected by modern browser js engines.
+
+## Function Statement aka Function Declaration
+- The below way of creating a function is called Function Statement.
+```
+function a(){
+ console.log(1);
+}
+a();
+```
+## Function Expression 
+- The below way of creating a function is called Function Expression.
+```
+var b = function(){
+console.log(2);
+}
+b();
+```
+## Difference b/w Function Statement and Function Declaration
+- The difference is hoisting.
+- During the memory creation phase, the function created in the way of *function statement* is treated as an *function* but the function created in the way if *function expression* is treated as an *variable*.
+- After in the code execution phase, the function is assigned to the variable, till then its a variable assigned with some undefined. in case of function expression.
+- That means by considering above examples of function statement and expression, a can be called before the lines of function code but b cannot be called before its initialization and will cause error mentioning that *b is not a function* if we call 'b' before the initialization.
+
+## Anonymous function
+- Functions without name is an Anonymous function.
+- These functions does not have their identity means that they cant be called directly unless it is assigned to some variables as function expression
+```
+// Below is a anonymous function but using directly as below causes an error saying that function statements require a function name.
+function(){
+}
+
+// Below is valid
+var b = function(){
+}
+```
+- Anonymous functions are used when they are used as values.
+
+## Named Function Expression
+- The below way of function is a named function expression.
+```
+var b = function xyz(){
+console.log(2);
+}
+b();
+- We can call the function using variable name b but we cant use the function with the name xyz from outside the function.(Means, xyz can be used inside of that function itself like below)
+var b = function xyz(){
+console.log(2);
+xyz();
+}
+```
+
+## Difference b/w parameters and arguments
+- Parameters are the names used in the function defination.
+- Arguments are the values(may be functions,numbers,other variables etc..) that we pass to the function in the time of calling it. 
+```
+function c(param1, param2){
+<!-- Params are local scoped in this particular function -->
+ console.log(param1+param2);
+}
+c(3,4)
+```
+## First Class Functions / First class citizens
+- It is a programming pattern.
+- The ability of the functions to use them as values is called first class functions
+- Functions can be used as a value for assigning a variable, can be passed into another functions, returned out of another functions.
+- Above all are the examples.
+
 
