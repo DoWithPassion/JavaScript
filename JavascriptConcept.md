@@ -645,4 +645,101 @@ c(3,4)
 - Functions can be used as a value for assigning a variable, can be passed into another functions, returned out of another functions.
 - Above all are the examples.
 
+## Callback Function
+- It is a function passed as an argument in another function.
+- Due to this callback functions, javascript which is a synchronous and single-threaded language is able perform async operations efficiently.
+```
+function x(y){
+
+}
+x(function y(){
+  
+})
+<!-- y is the callback function here -->
+```
+- The function y in the above example can be called back at some time in the function x, so it is called as callback function.
+
+```
+setTimeout(function(){
+  console.log("Timer")
+},5000)
+
+function x(y){
+console.log(x);
+y();
+}
+x(function y(){
+  console.log(y);
+})
+
+```
+- When executed the above code, 
+- As javascript is a single threaded language, that means the code will be executed one line at a time and in a order.
+1. setTimeout will be registered and that setTimeout will take that callback function and store it in a seperate space and will attach a timer to it. And the js will not wait for 5s for the completion of the timer instead it move on to next lines. Whatever need to be run after 5s is passed to the setTimeout as a callback function.
+ "Time tide and Javascript waits for none 😜"
+2. It will see the function defination of x.
+3. Next, will call the function x by passing the callback function y and executes the console.log("x") and later calls the callback and then prints the logs in the function y. After that call stack will get empty.
+4. After then, the timer will expires after few milli seconds and then suddenly the setTimeout anonymous function will appear in the callstack and execute timer log in that callback function.
+
+## Blocking main thread
+- Javascript has only one callstack which is also called as main thread.
+- Everything whatever executed in the page is executed through the callstack only.
+- If any operation blocks this callstack, then it is called **Blocking the main thread**
+- Suppose a function x has very heavy operation that may take 20-30 seconds to complete. By that time as js has only one call stack(one main thread), it wont be able to execute any other function in the code that means everything is blocked until the completion of function x.
+- We should never block our callstack.
+- We should always try to use async operations for the things which takes time.
+- If js doesnt have the first class functions we cannot execute the asynchronous operations.
+
+## Event listners
+```
+<!-- HTML -->
+<button id="clickMe">Click Me</button>
+
+<!--script Js  -->
+document.getElementById("clickMe")
+  .addEventListener("click",function xyz(){
+    console.log("button clicked");
+  })
+```
+- Here in the above example, event listener takes the eventtype, a function which is a callback function.
+- So whenever an click event happens on that function, it will call that callback function which will be stored somewhere and automatically pushed into our callstack.
+
+### Get the count of how many times the button clicked
+1. First way is by using the global variable which is not a good solution as the variable can be modified and accessible outside the program.
+```
+let count = 0;
+document.getElementById("clickMe")
+  .addEventListener("click",function xyz(){
+    console.log("button clicked ",++count);
+  })
+```
+2. Another way is by using closures, through which we can make the count variable secure and make count cannot be modified through any other program.
+```
+function attachEventListeners(){
+  let count = 0;
+  document.getElementById("clickMe")
+    .addEventListener("click",function xyz(){
+      console.log("button clicked ",++count);
+    })
+}
+
+attachEventListeners();
+```
+- From the above example, the callback function xyz is forming an closure with its outer scope.
+- So now, when we call the function attachEventListners(), it will form a closure with count and remembers where the count is present.
+
+### Going deep through dev tools
+- Using same example from the above.
+- When we go to the elements in the devtools, we can see our button there.
+- Click on that button tag and see the event listeners on the button in the event listeners tab.
+- In that event listeners tab, we can see the click event listener that we attached.
+- And in that click event listener we had an handler which is the callback function xyz that we passed to the event listener.
+- And in that handler it has the scopes, which is the same lexical scope that the function carries.
+- In that scopes, it consists of its parent's environment lexical scope which is the closure and also the parent's environemnt of its parent which is the global scope.
+
+### Why do we need to remove event listeners (Garbage collection and removeEventListeners)
+- Event listeners are heavy in the memory. It may contains the closures.
+- Due to this our page will load slow due to all this scopes and callback functions in case of huge event listeners in our page.
+- So, good practice is that to free up event listeners when not in use.
+- When we free up event listeners all the variables are garbage collected.
 
