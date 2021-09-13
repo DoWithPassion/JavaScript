@@ -771,7 +771,9 @@ attachEventListeners();
   - We are able to use all this by using the global object called window.
   - It means all this functions are attached to the global window object. (setTimeout or window.setTimeout)
 
-## Event Loop and CallBack Queue
+## Event Loop, CallBack Queue and Micro Task Queue
+![image](https://user-images.githubusercontent.com/76255797/133112174-b9163d88-442d-43e8-a7c1-bc2d18ddd872.png)
+
 Eg:
 ```
 console.log("Start");
@@ -848,6 +850,6 @@ console.log("End");
 - The situation where the callback functions in the micro task queue creates another micro task continously and does not give chance for the functions in callback queue is called as Starvation of functions in the callback queue.
 
 
-![image](https://user-images.githubusercontent.com/76255797/133112174-b9163d88-442d-43e8-a7c1-bc2d18ddd872.png)
+
 
  
