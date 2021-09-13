@@ -595,10 +595,10 @@ console.log(2);
 }
 b();
 ```
-## Difference b/w Function Statement and Function Declaration
+## Difference b/w Function Statement and Function Expression
 - The difference is hoisting.
-- During the memory creation phase, the function created in the way of *function statement* is treated as an *function* but the function created in the way if *function expression* is treated as an *variable*.
-- After in the code execution phase, the function is assigned to the variable, till then its a variable assigned with some undefined. in case of function expression.
+- During the memory creation phase, the function created in the way of *function statement* is treated as an *function* but the function created in the way of *function expression* is treated as an *variable*.
+- After in the code execution phase, the function is assigned to the variable, till then its a variable assigned with some undefined, in case of function expression.
 - That means by considering above examples of function statement and expression, a can be called before the lines of function code but b cannot be called before its initialization and will cause error mentioning that *b is not a function* if we call 'b' before the initialization.
 
 ## Anonymous function
@@ -735,7 +735,7 @@ attachEventListeners();
 - In that event listeners tab, we can see the click event listener that we attached.
 - And in that click event listener we had an handler which is the callback function xyz that we passed to the event listener.
 - And in that handler it has the scopes, which is the same lexical scope that the function carries.
-- In that scopes, it consists of its parent's environment lexical scope which is the closure and also the parent's environemnt of its parent which is the global scope.
+- In that scopes, it consists of its parent's environment lexical scope which is the closure and also the parent's environment of its parent which is the global scope.
 
 ### Why do we need to remove event listeners (Garbage collection and removeEventListeners)
 - Event listeners are heavy in the memory. It may contains the closures.
@@ -743,3 +743,111 @@ attachEventListeners();
 - So, good practice is that to free up event listeners when not in use.
 - When we free up event listeners all the variables are garbage collected.
 
+## Event Loop
+-  Javascript is a synchronous single threaded language and it has only one call stack and can only do one thing at a time.
+-  The callstack is present inside the JS engine.
+-  All the code of javascript is executed in the call stack.
+-  Whenever js code is executed, a global execution context is created an it is pushed into the callstack.
+-  In the Global execution context, memory is allocated for our variables and functions and then the code is executed line by line.
+-  Incase if we came across any function calls in the code, an execution context for that particular function is created and pushed into the call stack.
+-  After that, code in the function execution context is allocated with memory and code is executed.
+-  After completion of the execution of that particular execution context, it will be popped out of the call stack and control moves back to the code in the global execution context.
+-  After the completion of execution of global execution context, it also popped out of the callstack and completes the program.
+-  So, main job of the callstack is execution of the context.
+
+- The JS Enginer is present in the browser.
+  `CallStack -inside-> JSEngine -inside-> Browser`.
+- Callstack doesnt have the power of running the code after some time. ANything if it enters call stack, it should be executed. So it doesnt have the power of timer.
+- So, the things like timers,locations, bluetooth etc.. are handled by the super power called Browser.
+- To access the things like timers, location and other external things we need something called web apis which will connect with browser to get the features.
+#### WebAPIs
+  - These below are the kind of super powers that browsers have and they are provided to us in js engine by providing some access to use all of these.
+  -   setTimeout()
+  -   DOM APIs for DOM
+  -   fetch() 
+  -   localStorage
+  -   console
+  -   location and more
+  - We are able to use all this by using the global object called window.
+  - It means all this functions are attached to the global window object. (setTimeout or window.setTimeout)
+
+## Event Loop and CallBack Queue
+Eg:
+```
+console.log("Start");
+document.getElementById("btn").addEventListener("click",function cb(){
+  console.log("Callback")
+});
+console.log("End")
+```
+- Whenever we run a js code, Global Execution Context (GEC) is created and pushed into the callstack.
+- It goes through the code and allocate memory and then execute code line by line.
+- Here when the control goes to the first line, js engine see the console.log and it goes to the console in the window object to hit the web api console method and hit the log to the console in the browser.
+- Next control moves to the next line, document.getElementById and call the DOM apis and get the element and then addEventListener which is another super power given to the js engine by the browser through the window object in the form of webAPI which is the DOM API.
+
+- This addEventListener *registers a callback in the webAPIs environment* (where the window object and its methods are present) on an event "click". And then js enginer moves on.
+- And next the control goes to the console log end and js engine goes to te console in the window object and hit the web api console method and hit that log message to the console in the browser.
+- As program ended, the GEC will also be cleared from the callstack but the event handler callback registered in the web apis environment will stay back in it until we explicitly un registered the event or closed that browser.
+- When the user clicks on that button - the event handler is binded to, then that event handler reference is pushed to the callback queue and that callback waits over there for its turn to get executed.
+- From then the event loop takes care of the execution of that callback on callstack which is in the callback queue.
+  ### Event Loop
+  - The job of event loop is continous monitoring of the callback queue and the callstack.
+  - If event loops finds that callstack is empty and there is a function waiting in the callback queue, then event loop takes that function and put it in the callstack.
+- So when the callstack is empty, the eventloop removes that from the callstack and push it into call stack to make it executed.
+
+ ### Why do we need a callback
+ -  Event loop will not pick the callback directly from the webapi environment because, If suppose user/some other fire the events continously, event loop cant manage that many clicks at a time.
+    -  If suppose user/some other fire the events continously, then that callbacks will wait in that callback queue. Next event loop will continusly check the callstack and if it is empty then take a callback from the queue and push into the callstack one by one.
+
+### fetch() function
+-  fetch is way to call an api and get the response as a promise which can be handled using then & catch or asynchronously.
+-  then method will take the callback function and resolve the promise.
+```
+console.log("Start");
+setTimeout(function cbT(){
+  console.log("CB Set Time out")
+},5000)
+fetch("https://api.netflix.com")
+.then(function cbF(){
+console.log("CB Netflix API Fetch");
+});
+//some 1000 lines of code
+console.log("End");
+
+```
+- When the above js code executed, a GEC is created and pushed into the callstack.
+- Then allocated memory for the functions & variables and the code is executed line by line.
+- When the control is at our first line, js engine see the console.log and it goes to the console in the window object to hit the web api console method and hit the log "Start" to the console in the browser.
+- Now it moves to the next line and setTimeout will register this callback function on to the web api environment (where the window object and its corresponding methods are present) and also js engine starts the 5000 ms timer and attaches to it and next js engine moves to the next line.
+- And there it encounters the fetch function, then js engine points to the fetch in the window object to hit the web api fetch method for making network calls.
+- And it also registers cbF callback function in the web api environment and it will wait for the data to be returned from the server from which we made a network call.
+- So once we get the data from the server, the callback function cbF reference will be pushed into a other queue called **Micro Task Queue** which has highest priority than callback function.
+  ### Micro Task Queue
+   -  It is also similar to the callback queue but only in case of promises and network calls the callback functions will go to the microtask queue.
+  -  Again the event loop will take care of pushing the function to callstack. But here if both the callback queue and the micro task queue contains the functions and the callstack is empty, it will consider and give priority to the functions in the micro task queue and push them into call stack first. Because micro task queue functions have high priority than the callback queue.
+- Suppose if we get the response from the server immediately, and still the main program execution is not done in the callstack as there are some another 1000 lines need to be executed
+- But meanwhile the timer of settimeout callback also expired and the callback function cbT is waiting in the callback queue.
+- And now the code is still executing in the callstack and the 2 callback functions cbF in microtask queue and  cbT in callback queue are waiting for execution in callstack.
+- And at the same time event loop will continously check the callstack for pushing the callback references into callstack.
+- And suppose the execution finished and the last console log end is fired and the global execution context is popped out of the callstack.
+- Then event loop finds that callstack is empty and then event loop will push cbF callback from microtask queue first in the callstack and it will be executed and then after its completion and removal from the callstack the event loop will take the cbT callback from the callback queue into callstack and it also executed and then removed from the callback.
+
+### Micro Tasks
+- All the callback functions from the promises are called micro tasks.
+
+### Mutation Observer
+- Mutation observer will keeps on checking whether there is some mutation on the dom tree or not. If there is some mutation in the DOM tree, it will execute some callback function.
+
+- **Promises and the mutation observer objects will go to the _Micro Task Queue_**
+- **Other event listeners, dom apis and other will go to the _Callback Queue_**
+
+- **Callback Queue is also called as Task Queue*
+- **Only Asynchronous callbacks are registered in the web apis environment. And other synchronous function we pass inside like map, reduce and filter are not registered in the web api environment.**
+
+### Starvation of functions in the callback queue
+- The situation where the callback functions in the micro task queue creates another micro task continously and does not give chance for the functions in callback queue is called as Starvation of functions in the callback queue.
+
+
+![image](https://user-images.githubusercontent.com/76255797/133112174-b9163d88-442d-43e8-a7c1-bc2d18ddd872.png)
+
+ 
