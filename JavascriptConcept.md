@@ -850,6 +850,157 @@ console.log("End");
 - The situation where the callback functions in the micro task queue creates another micro task continously and does not give chance for the functions in callback queue is called as Starvation of functions in the callback queue.
 
 
+## JS Engine
+- Javascript can be run only any type of systems.
+- This can be possible due to Javascript Runtime Environment
+### Javascript Runtime Environment
+  - It is like a big container which has all the things required to run the javascript code.
+  - The Javascript runtime environment includes js engine, set of APIs, eventloop, callback queue, micro task queue and someother things required to run js.
+  - **JS Engine** is the heart of the Javascript Runtime Environment as it is not possible without JS Engine.
+  - Every browser is able to run the js because it contains the JS engine in it.
+  - Nodejs is also called as open source javascript runtime which gives us the ablity to run the js outside the browser by using nodejs environment.
+  - The APIs may differ from environment to environment based on where it is running.
+  - Nodejs JS RE can have some different APIs than the Javascript runtime environment in the Browser and some may be same for both of them like console, setTimeout, etc.. but they may have different implementations for browser and the apis.
+### Different JS Engines
+  - There are many js/ecma engines. But all these are implementing just in time compilation(JIT) or variations of the idea.(JIT- JIT is often faster because it compiles the code when it is actually called for, the first time it is called or it is a way of executing computer code that involves compilation during execution of a program (at run time) )
+  - Some of the popular ECMAScript/JS Engines are Carakan-Opera, Chakra- MS Edge, SpiderMonkey-Firefox, JavascriptCore-Safari, v8-Chrome,Node,Deno,V8.NET and so on.
+  - We can also create a js engine by following ECMA(European Computer Manufacturer's Association) script standards.
+  #### First JS Engine
+    - The first js engine was developed by Brendan Eich who developed the js.
+    - This engine was evolved a lot and this was called as the SpiderMonkey now.
+- JS is not a machine. It is like program written in low level languages.
+- JS Engine will take the js code that we written as input and gives out the machine level code which can be executed by the machines.
+- For example V8 engine is written in c++. 
+### JS Engine Architecture
+
+- JS Engine takes the code as input and it goes through the 3 major steps.
+  - Parsing
+  - Compilation & Execution
+
+ #### Parsing
+  - The code which we written will be broken into tokens.
+  ##### Syntax parser
+  - This will take code and convert into AST (Abstract Syntax Tree).
+  - It will be done something like below.
+  ```
+  <!--  JS  -->
+  const bestJSCourse = "Namaste Javascript"
+  
+  <!--   AST -->
+    {
+    "type": "Program",
+    "start": 0,
+    "end": 41,
+    "body": [
+      {
+        "type": "VariableDeclaration",
+        "start": 0,
+        "end": 41,
+        "declarations": [
+          {
+            "type": "VariableDeclarator",
+            "start": 6,
+            "end": 41,
+            "id": {
+              "type": "Identifier",
+              "start": 6,
+              "end": 18,
+              "name": "bestJSCourse"
+            },
+            "init": {
+              "type": "Literal",
+              "start": 21,
+              "end": 41,
+              "value": "Namaste Javascript",
+              "raw": "\"Namaste Javascript\""
+            }
+          }
+        ],
+        "kind": "const"
+      }
+    ],
+    "sourceType": "module"
+  }
+
+  ```
+  - Later, the AST generated is passed to Compilation phase.
+  
+### Interpreter
+- Our whole Code is executed line by line.
+- Fastly executed and less efficiency.
+### Compiler
+- Our whole code is compiled even before the execution and an optimized version of our code is generated.
+- And then the optimized code is executed.
+- More efficiency and less speed.
+
+- JS is initially an interpreted language but in today's world most of the modern js engines uses the both the compiler and interpreter. So its purely dependent on the js engine.
+
+### JIT Compilation
+- By using this mechanism, the js engines are able to use interpreter along with compiler.
+- That means it uses Interpreter and compiler to execute the code.
+- AST is given as input to the interpreter, then interpreter will convert the high-level code to machine code line by line and it takes the help of compiler to optimize the code and then it is executed at the same time.
+- The job of compiler over here is to optimize the code as much as it can on the *run time* that is why it is called JIT compiler.
+- Different JS engines will have different algorithms to perform JIT compilation.
+- In some JS engines, there is something called as AOT compilation. Ahead of Time compilation where the compiler takes the piece of code and which is going to be executed next and tries to optimize it as much as it can.
+- The execution is done by two major components.
+  1. Memory Heap 
+  2. Callstack
+- Memory Heap is the place where all the variables and functions are stored. It is constantly in sync with callstack, garbage collector and lot of other things.
+
+### Garbage Collector
+- It basically tries to free up memory whenever possible like when some variables are not been used, cleared timeout etc..
+- It uses an algorithm called Mark & Sweep.
+
+![image](https://user-images.githubusercontent.com/76255797/133243742-14c528e7-020f-4dd1-9e12-d0a33dc6653f.png)
 
 
- 
+### Mark & Sweep Algorithm
+- Any garbage collection algorithm must perform 2 basic operations. 
+- One, it should be able to detect all the unreachable objects. 
+- Secondly, it must reclaim the heap space used by the garbage objects and make the space available again to the program.
+- The above operations are performed by Mark and Sweep Algorithm in two phases:
+1. Mark phase
+- When an object is created, its mark bit is set to 0(false). 
+- In the Mark phase, we set the marked bit for all the reachable objects (or the objects which a user can refer to) to 1(true). 
+- Now to perform this operation we simply need to do a graph traversal, a depth first search approach would work for us.
+-  Here we can consider every object as a node and then all the nodes (objects) that are reachable from this node (object) are visited and it goes on till we have visited all the reachable nodes.
+-  Algorithm
+    ```
+    Mark(root)
+        If markedBit(root) = false then
+            markedBit(root) = true
+            For each v referenced by root
+                 Mark(v)
+    ```
+2. Sweep phase
+- As the name suggests it “sweeps” the unreachable objects i.e. it clears the heap memory for all the unreachable objects. 
+- All those objects whose marked value is set to false are cleared from the heap memory.
+- Now the mark value for all the reachable objects is set to false, since we will run the algorithm (if required) and again we will go through the mark phase to mark all the reachable objects.
+- Algorithm
+    ```
+    Sweep()
+    For each object p in heap
+        If markedBit(p) = true then
+            markedBit(p) = false
+        else
+            heap.release(p)
+    ```
+
+### Compiler uses some optimizations.
+- Optimizations like
+  - **Inlining**
+    - Inlining is the process of replacing a subroutine or function call at the call site with the body of the subroutine or function being called. This eliminates call-linkage overhead and can expose significant optimization opportunities.
+  - **Copy Elision**
+    - As copying of object causes overheads of creating a temporary object & then copying it.
+    - So to avoid that, modern compilers elide the copying of objects whenever possible. This compiler optimization technique that avoids unnecessary copying of objects is called Copy Elision.
+  
+  - Inline caching
+    - Inline caching is an optimization technique employed by some language runtimes, and first developed for Smalltalk.
+    - The goal of inline caching is to speed up runtime method binding by remembering the results of a previous method lookup directly at the call site.
+    -  Inline caching is especially useful for dynamically typed languages.
+
+### V8 Js Engine
+![image](https://user-images.githubusercontent.com/76255797/133243302-243f2551-85ac-4549-8f53-9aa3bfd0f1f3.png)
+- Then generated byte code is executed.
+
+
