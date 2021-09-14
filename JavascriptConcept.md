@@ -849,6 +849,12 @@ console.log("End");
 ### Starvation of functions in the callback queue
 - The situation where the callback functions in the micro task queue creates another micro task continously and does not give chance for the functions in callback queue is called as Starvation of functions in the callback queue.
 
+## setTimeout Trust Issues
+- It doesnot guarantee that it always called after given delay ms as it may take more than the given delay and it entirely depends on the callback queue and callstack.
+- Because, there might be some code executing in the call stack already and the event loop finds the callstack as busy and waits until the callstack become available for moving the callback from callback queue to the callstack. Or there might be some callbacks already in the queue before the current callback.
+- So, it may take more time than expected in those cases. Or the callback will wait for the whole program to execute before the cbF execute in the callstack. This is also called as **Concurrency model in js**.
+- Suppose, if we use the setTimeout with 0s it will not execute immediately because the function will be pushed into the callback queue and wait until the callstack is empty. So only after the completion all the things in the callstack it will execute
+
 
 ## JS Engine
 - Javascript can be run only any type of systems.
