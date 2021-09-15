@@ -9,7 +9,6 @@
         - It can be also known as **Variable environment**.
       2. Code Component
         - It is the place where our code is executed line by line as it is single-threaded.
-        - It can be also known as **Thread of Execution**.
 ### JavaScript is a Synchronous Single-Threaded Language.
   - As it is a single-threaded language, js can execute only one command at a time.
   - Synchronous single-threaded means that js can execute one command at a time and in a specific order which means it will only go to the next line if it executed the current line.
@@ -33,7 +32,7 @@
       - When the return statement is encountered in the function, it takes the value of the variable in the return statement from the local memory of the function execution context and it returns the control back to the place in the main execution context(parent) where the function the is called.
       - And the **whole execution context of the function is deleted after the control coming to the main execution context**. It means when we call the same function another time again the new execution context is created and the same process is repeated.
      
-
+  - The process can be known as **Thread of Execution**.
 ### Call stack
   - It is a stack that is populated when a program is executed.
   - By using this, javascript is working and managing with all the execution contexts it created.
