@@ -18,7 +18,7 @@
   - When we run a javascript code, a **global execution context** is created with memory and code component and it will be deleted after complete execution of the js program.
   - And this execution context is created in two phases.
     1. **Memory Allocation Phase (Creation phase)**
-      - In this phase, js will goes through the program line by line and allocates memory to all the variables and functions in the code.
+      - In this phase, js will go through the program line by line and allocate memory to all the variables and functions in the code.
       - When a variable is created or allocated with memory, the value of the key(variable name) will be undefined.
       - When a function is allocated with memory, the value of that function name(key) will be the entire code in that function.
     2. **Code Execution Phase**
@@ -29,8 +29,8 @@
       
       - The functions will not be executed directly until they have been called or invoked.
       - When the *function is called*, a *new execution context is created* which again consists of memory and code components. And it also contains the memory creation phase and the code execution phase.
-      - When the return statement is encountered in the function, it takes the value of the variable in the return statement from the local memory of the function execution context and it returns the control back to the place in the main execution context(parent) where the function the is called.
-      - And the **whole execution context of the function is deleted after the control coming to the main execution context**. It means when we call the same function another time again the new execution context is created and the same process is repeated.
+      - When the return statement is encountered in the function, it takes the value of the variable in the return statement from the local memory of the function execution context and it returns the control to the place in the main execution context(parent) where the function the is called.
+      - And the **whole execution context of the function is deleted after the control comes to the main execution context**. It means when we call the same function another time again the new execution context is created and the same process is repeated.
      
   - The process can be known as **Thread of Execution**.
 ### Call stack
@@ -81,7 +81,7 @@
 
 #### this variable
 - Along with the window object while creation of global execution context, the js engine creates a _this_ variable.
-- It will points to the window object while the global execution context creation time itself.
+- It will point to the window object while the global execution context creation time itself.
 - At global level, this===window is true.
 
 #### Whenever you create any variables in the global space (not in any functions) they are attached to that global object (_window_ in the browser). 
@@ -129,6 +129,7 @@ console.log(this.a);
 - Later while the function a is called, it will create another execution context, then memory is created for variable b and function c.
 - After that the execution of code in the function begins, b is assigned with the value 10 and call function c.
 - As function invoked, execution context for C is created and again the memory is allocated along with the code component.
+
 ### Lexical Environment
 - Lexical (in a hierarchy or order) means where the specific code is physically present.
    Eg: From the above example, we can say that c is lexically inside function a & function a is lexically inside the global space.
@@ -138,7 +139,7 @@ console.log(this.a);
    - In the same way, a lexical environment of function a  =  local execution context memory space + lexical environment of global execution context
    - In the case of the global lexical environment, the parent lexical environment points to null.
  Eg:
- - When we try to print the variable b, first js engine searches within the local lexical environment and as it is not found it will searches in the parent lexical environment through some reference to that and so on until it is found or the parent lexical environment is null.
+ - When we try to print the variable b, first js engine searches within the local lexical environment and as it is not found it will search in the parent lexical environment through some reference to that and so on until it is found or the parent lexical environment is null.
  ```
   function a(){
     console.log(b) // prints 10
@@ -165,7 +166,7 @@ console.log(this.a);
   console.log(b);
 ```
 - As it is not found, then it tries to search for the reference of the parent lexical environment of the global lexical environment but it is null. Therefore no more lexical environments.
-- So as the js engine did not found b in the global and its parent, it declares and raises that the variable b is _not defined_ (not in the scope).
+- So as the js engine did not find b in the global and its parent, it declares and raises that the variable b is _not defined_ (not in the scope).
 
 ## Scope Chain
 - The way/mechanism of the finding variable or functions through this chain of lexical environments and their parent references is known as Scope Chain.
@@ -184,7 +185,7 @@ console.log(this.a);
 - But Re-declaration of var variables is permitted.
 
 ### let vs const
-- Re-initialization/initialization after the declaration is possible in to incase of the let but incase of the const, re-initialization is not possible and also the value for the const variable should be given at the time of declaration itself.
+- Re-initialization/initialization after the declaration is possible in case of the let but incase of the const, re-initialization is not possible and also the value for the const variable should be given at the time of declaration itself.
 - If we did not give value to const variable at the time of declaration, it will throw a syntax error saying that the initializer for the const variable is missing because the const syntax expects initialization & declaration at the same time.
 - If we do not try to re-initialize or change the value of the const variable after declaration time, it throws Type Error: Assignment to a constant variable because const type variable can be reassigned.
 
@@ -237,7 +238,7 @@ Eg:
 - But a will be a global scope as we discussed variables declared with var always tied to the scope where they are declared.
 - As here, it is not declared in any function and declared in the global execution context so it is hoisted to global space.
 - And we can also check that even let and const are declared in the global execution context, but they are hoisted in a special space called block scope. So let and const variables are called block-scoped variables.
-- Block scope also follows the lexical order, which means if we have nested blocks with same variable declared in each block and when we print the variable in some block, it will access the value of the variable from the nearest block. (i.e., checks in the current lexical environment and if it is not there then it will search in the parent lexical environment.)
+- Block scope also follows the lexical order, which means if we have nested blocks with the same variable declared in each block and when we print the variable in some block, it will access the value of the variable from the nearest block. (i.e., checks in the current lexical environment and if it is not there then it will search in the parent lexical environment.)
 ```
 const a = 20;
 {
@@ -392,8 +393,8 @@ Namaste JS
 ```
 - Its printing like this because, it is due to the closures.
 - As the closure is a function along with its lexical environments, So even when the function is taken from its original scope, still it remembers its lexical environment.
-- What happened here is that, when the js takes and stores this function somewhere by attaching a timer, it remembers the **reference** to the variable i not its value.
-- So when the loop runs for the each time, it store/makes a new copy of the function (closure) which is in the setTimeout & attaches a timer along with remembering the reference that points to the i.
+- What happened here is that, when the js takes and stores this function somewhere by attaching a timer, it remembers the **reference** to the variable I not its value.
+- So when the loop runs for each time, it store/makes a new copy of the function (closure) which is in the setTimeout & attaches a timer along with remembering the reference that points to the i.
 - Here, in this case all the functions that are created and stored are pointing to the **same reference of i because the var scope is global**.
 - After storing, the js will completes the execution of loop quickly and doesnot wait for anything. So when the timer finishes, it will print/use the values of the remembered references at that particular point of time.
 - Here its too late to print the value on the each iteration as their timer is too long, the js continues with remaining program. So, in this case after the completion of the timer all the functions prints the same.
@@ -615,7 +616,7 @@ var b = function(){
 - Anonymous functions are used when they are used as values.
 
 ## Named Function Expression
-- The below way of function is a named function expression.
+- The below the way of function is a named function expression.
 ```
 var b = function xyz(){
 console.log(2);
@@ -630,7 +631,7 @@ xyz();
 
 ## Difference b/w parameters and arguments
 - Parameters are the names used in the function defination.
-- Arguments are the values(may be functions,numbers,other variables etc..) that we pass to the function in the time of calling it. 
+- Arguments are the values(may be functions,numbers, other variables etc..) that we pass to the function at the time of calling it. 
 ```
 function c(param1, param2){
 <!-- Params are local scoped in this particular function -->
