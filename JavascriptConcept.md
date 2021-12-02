@@ -1078,3 +1078,7 @@ console.log(radii.calculate(diameter))
 - This is possible because functions are first class citizens.
 
 
+
+## Credits
+@akshaymarch7 's Namste Javascript
+https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP
