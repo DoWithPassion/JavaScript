@@ -4,14 +4,15 @@
   - Everything in the javascript happens inside an Execution Context.
   - It can be considered as a container in which whole javascript code is executed.
   - It has 2 components in it.
-      1. Memory Component
-        - It is the place where the variables and functions are stored in the form of key-value pairs.
-        - It can be also known as **Variable environment**.
-      2. Code Component
-        - It is the place where our code is executed line by line as it is single-threaded.
+  a. Memory Component
+    - It is the place where the variables and functions are stored just before our program execution begins.
+    - It is also known as a Variable environment.
+  b. Code Component
+    - It is the place where our code is executed line by line as it is single-threaded..
+
 ### JavaScript is a Synchronous Single-Threaded Language.
   - As it is a single-threaded language, js can execute only one command at a time.
-  - Synchronous single-threaded means that js can execute one command at a time and in a specific order which means it will only go to the next line if it executed the current line.
+  - Synchronous single-threaded means that the js engine can execute one command at a time and in a specific order. In turn, specifies that it will only move to the next line after the end of execution of the previous line.
 
 
 ## What happens when we run js code?
@@ -34,20 +35,31 @@
      
   - The process can be known as **Thread of Execution**.
 ### Call stack
-  - It is a stack that is populated when a program is executed.
-  - By using this, javascript is working and managing with all the execution contexts it created.
-  - Every time in the bottom of the stack, the global execution context is populated.
-  - When a function is invoked a new execution context is put into the stack and control is now to the top of the stack i.e., the function's execution context.
-  - After the function returns the value to the global execution context, that function is popped from the call stack and the control goes back to the global execution context (as it is the top element in the stack now).
-  - After the complete execution of the js program the global execution context is also popped out from the call stack.
-
-  - Therefore, we can see that the **Call Stack** is the one that **Maintains the order of execution of the Execution Contexts**.
-  - _Call Stack_ is also known as 
-    - _Execution Context Stack_
-    - _Program Stack_
-    - _Control Stack_
-    - _Runtime Stack_
-    - _Machine Stack_
+ - When the Javascript program is executed, the javascript engine will use this call stack to keep track of execution contexts & lexical environments. 
+ - Every time at the bottom of the stack, the global execution context is populated.
+How it works:
+```
+const c = 10
+function z(){
+// Some operation
+}
+z();
+console.log("Done")
+```
+-  When the above code is executed, initially a global execution context is created with memory and code components and pushed to the call stack. As the top pointer of the call stack points to the global execution context, the js engine control goes over to the top of the stack.
+-  In the memory allocation phase, memory will be allocated for the variable c with undefined and for the z with whole function code.
+-  Next, In the code execution phase, c is assigned a value of 10. And in the next line, it finds the function and the engine will do nothing and move on to the next line of function. 
+- In the next line, we can see that a function is called. Now at this point, the function execution starts.
+- As functions are like a mini-program with their own space and scope, when the function is created a new execution context is created and pushed into the call stack. And now, the top pointer points to the function's execution context which makes the control move over to the function.
+- And after completion of the function's execution, the function's execution context is popped from the stack and control moves over to the global execution context and it will be continued.
+- After the completion of the main program, the global execution context is also popped from the call stack.
+- Therefore, we can see that the **Call Stack** is the one that **Maintains the order of execution of the Execution Contexts**.
+- Call Stack_ is also known as 
+   - Execution Context Stack
+   - Program Stack
+   - Control Stack
+   - Runtime Stack
+   - Machine Stack
     
 ## Hoisting
 - Hoisting is the mechanism in js through which we can access the variables and functions in the program even before initialising them or even before the lines of declaring those variables and functions without any error.
